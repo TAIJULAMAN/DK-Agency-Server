@@ -136,11 +136,37 @@ async function run() {
       // console.log(result);
       res.send(result);
     });
+    app.delete("/webs/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await webCollection.deleteOne(query);
+      // console.log(result);
+      res.send(result);
+    });
+    app.post("/webs", async (req, res) => {
+      const newItem = req.body;
+      const result = await webCollection.insertOne(newItem);
+      // console.log(result);
+      res.send(result);
+    });
 
     //  app related api.....................................................................
     app.get("/apps", async (req, res) => {
       const cursor = appCollection.find();
       const result = await cursor.toArray();
+      // console.log(result);
+      res.send(result);
+    });
+    app.delete("/apps/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await appCollection.deleteOne(query);
+      // console.log(result);
+      res.send(result);
+    });
+    app.post("/apps", async (req, res) => {
+      const newItem = req.body;
+      const result = await appCollection.insertOne(newItem);
       // console.log(result);
       res.send(result);
     });
@@ -159,6 +185,13 @@ async function run() {
       res.send(result);
       // console.log(result);
     });
+    app.post("/reviews", async (req, res) => {
+      const newItem = req.body;
+      const result = await reviewCollection.insertOne(newItem);
+      // console.log(result);
+      res.send(result);
+    });
+
     // team related api..................................................................
     app.get("/teams", async (req, res) => {
       const cursor = teamCollection.find();
@@ -188,31 +221,10 @@ app.listen(port, () => {
   console.log(`dark tech server is runnung on port: ${port}`);
 });
 
-// //  menu related api.....................................................................
-// app.get("/menues", async (req, res) => {
-//   const cursor = menuCollection.find();
-//   const result = await cursor.toArray();
-//   res.send(result);
-// });
-// app.post("/menues", verifyJWT, verifyAdmin, async (req, res) => {
-//   const newItem = req.body;
-//   const result = await menuCollection.insertOne(newItem);
-//   res.send(result);
-// });
-// app.delete("/menu/:id", verifyJWT, verifyAdmin, async (req, res) => {
-//   const id = req.params.id;
-//   const query = { _id: new ObjectId(id) };
-//   const result = await menuCollection.deleteOne(query);
-//   res.send(result);
-// });
 
-// // cart related api.....................................................................
-// app.post("/carts", async (req, res) => {
-//   const item = req.body;
-//   // console.log(item);
-//   const result = await cartCollection.insertOne(item);
-//   res.send(result);
-// });
+
+
+
 // app.get('/carts', verifyJWT, async (req, res) => {
 //   const email = req.query.email;
 
@@ -237,23 +249,3 @@ app.listen(port, () => {
 //   const result = await cartCollection.deleteOne(query);
 //   res.send(result);
 // });
-
-
-// no need just try for fun.....................................................................................................................................................
-
- //   app.delete("/reviews/:id", async (req, res) => {
-  //     try {
-  //         const id = req.params.id;
-  //         const query = { _id: new ObjectId(id) };
-  //         const result = await reviewCollection.deleteOne(query);
-          
-  //         if (result.deletedCount === 1) {
-  //             res.status(200).json({ message: "Review deleted successfully" });
-  //         } else {
-  //             res.status(404).json({ message: "Review not found or already deleted" });
-  //         }
-  //     } catch (error) {
-  //         console.error("Error deleting review:", error);
-  //         res.status(500).json({ message: "Internal server error" });
-  //     }
-  // });
